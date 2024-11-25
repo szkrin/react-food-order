@@ -6,7 +6,8 @@ import { useContext } from 'react';
 export default function Modal() {
 
     const { items, isModalVisible, showModalHandler } = useContext(CartContext);
-    const cartTotal = items[0] ? items.reduce((sum, item) => {
+    console.log(items);
+    const cartTotal = items.length > 0 ? items.reduce((sum, item) => {
         return sum + parseFloat(item.price * item.qty);
     }, 0) : 0;
 
@@ -17,7 +18,7 @@ export default function Modal() {
             <div className="bg-orange-200 p-8 rounded shadow-lg w-3/4 max-w-lg">
                 <h2 className="text-2xl mb-4 font-bold">Your cart</h2>
                 <ul className='font-semibold'>
-                    {items[0] ? items.map((item) => {
+                    {items.length > 0 ? items.map((item) => {
                         return <CartItem key={item.id} name={item.name} amount={item.qty} price={item.price} id={item.id} />
                     }) : <p>Add meals to cart!</p>}
                 </ul>
