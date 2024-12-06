@@ -1,8 +1,9 @@
 import { createContext, useState, useEffect } from "react";
-import { fetchAvailableMeals } from '../httpHelper';
+import { fetchAvailableMeals } from '../helpers/httpHelper';
 
 export const CartContext = createContext({
     items: [],
+    setCart: () => { },
     addItemToCart: () => { },
     isFetching: false,
     cartLength: 0,
@@ -12,6 +13,8 @@ export const CartContext = createContext({
     isModalVisible: false,
     increaseQty: () => { },
     decreaseQty: () => { },
+    orderPlaced: false,
+    setOrderPlaced: () => { }
 });
 
 export default function CartContextProvider({ children }) {
@@ -20,6 +23,7 @@ export default function CartContextProvider({ children }) {
     const [isFetching, setIsFetching] = useState(false);
     const [error, setError] = useState('');
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [orderPlaced, setOrderPlaced] = useState(false);
 
     const cartLength = cart.length;
 
@@ -84,6 +88,7 @@ export default function CartContextProvider({ children }) {
 
     const ctxValue = {
         items: cart,
+        setCart: setCart,
         addItemToCart: addToCartHandler,
         isFetching: isFetching,
         cartLength: cartLength,
@@ -92,7 +97,9 @@ export default function CartContextProvider({ children }) {
         showModalHandler: showModalHandler,
         isModalVisible: isModalVisible,
         increaseQty: increaseQty,
-        decreaseQty: decreaseQty
+        decreaseQty: decreaseQty,
+        orderPlaced: orderPlaced,
+        setOrderPlaced: setOrderPlaced
     }
 
     return <CartContext.Provider value={ctxValue}>{children}</CartContext.Provider>
